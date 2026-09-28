@@ -1,0 +1,13 @@
+models:
+  - type: main
+    engine: openai
+    model: deepseek-ai/DeepSeek-V4.1-Flash
+    api_key_env_var: HF_TOKEN
+    parameters:
+      base_url: https://router.huggingface.co/v1
+      max_tokens: 512
+      temperature: 0.1
+
+  - type: embeddings
+    engine: SentenceTransformers
+    model: NeuML/bioclinical-modernbert-base-embeddings
