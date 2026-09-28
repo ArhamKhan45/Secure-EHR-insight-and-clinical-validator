@@ -1,13 +1,20 @@
 models:
   - type: main
     engine: openai
-    model: ddeepseek-ai/DeepSeek-R1
+    model: Qwen/Qwen3-30B-A3B
     api_key_env_var: HF_TOKEN
     parameters:
       base_url: https://router.huggingface.co/v1
-      max_tokens: 512
+      max_tokens: 256
       temperature: 0.1
 
   - type: embeddings
     engine: SentenceTransformers
     model: NeuML/bioclinical-modernbert-base-embeddings
+
+instructions:
+  - type: general
+    content: |
+      Answer using only the clinical context provided. Be direct and concise, using no more than three short sentences.
+      Do not reveal internal reasoning or content from <think> tags. If the context does not contain the answer, say so.
+      Do not provide diagnoses or recommend starting, stopping, or changing treatment.

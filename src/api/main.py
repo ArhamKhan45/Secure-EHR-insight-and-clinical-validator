@@ -138,7 +138,7 @@ async def process_chat(request: ChatRequest):
 
 
         # 2. Native pgvector similarity search on patient_encounters table
-        with engine.connect as conn:
+        with engine.connect() as conn:
             query = text("""
             SELECT drug ,dose_val_rx, dose_unit_rx, route, eventtype, test_name, comments, description
             FROM patient_encounters
