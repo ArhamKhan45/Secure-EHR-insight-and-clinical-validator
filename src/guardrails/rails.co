@@ -1,0 +1,84 @@
+define user ask for medical advice
+  "What medication should I prescribe?"
+  "Which medication should I prescribe?"
+  "What drug should I prescribe?"
+  "Which antibiotic should I prescribe?"
+  "What antibiotic should I start?"
+  "Which antibiotic should I start?"
+  "Should I start antibiotics?"
+  "What treatment should I start?"
+  "What treatment should I prescribe?"
+  "What medication should I give the patient?"
+  "What dose should I give the patient?"
+  "What dosage should I prescribe?"
+  "Should I increase the patient's dosage?"
+  "Should I decrease the patient's dosage?"
+  "Should I change the patient's medication?"
+  "Should I change the patient's treatment?"
+  "Should the patient take this medication?"
+  "What is the best treatment for this condition?"
+  "What medication is best for this condition?"
+  "What antibiotic is best for this infection?"
+  "Recommend a medication for this patient."
+  "Recommend a drug for this patient."
+  "Recommend a treatment for this patient."
+  "Diagnose the patient."
+  "Diagnose my symptoms."
+
+define user ask about patient history
+  "What was the patient's last recorded dosage?"
+  "What was the patient's previous dosage?"
+  "When was the patient admitted?"
+  "When was the patient discharged?"
+  "What medications were prescribed upon discharge?"
+  "What medications were recorded at discharge?"
+  "What medications did the patient receive?"
+  "What medications has the patient taken?"
+  "What medication is the patient currently taking?"
+  "What medications is the patient taking?"
+  "What was the dosage of Furosemide?"
+  "What was the last recorded dose of Furosemide?"
+  "Show me the patient's medication history."
+  "Show me the patient's historical lab results."
+  "What were the patient's lab results?"
+  "What diagnoses are recorded in the patient's file?"
+  "What liver-related diagnoses are recorded?"
+  "What diagnoses were recorded during admission?"
+  "What diagnoses were recorded at discharge?"
+  "What tests were performed?"
+  "What were the patient's previous test results?"
+  "What was the patient's admission type?"
+  "Where was the patient admitted?"
+  "Where was the patient discharged?"
+  "What is documented in the patient's medical history?"
+
+define user ask unrelated question
+  "What is the weather?"
+  "Tell me a joke."
+  "Write Python code."
+  "What is Python?"
+  "What is the Python language?"
+  "What is Python language?"
+  "What is the Python programming language?"
+  "Explain Python to me."
+  "What is Python used for?"
+  "What is the capital of France?"
+  "Who is the president?"
+  "Help me with my homework."
+  "Explain quantum physics."
+  "What is 2 plus 2?"
+  "Tell me a story."
+
+define bot refuse medical advice
+  "I can only retrieve information from the patient's medical records. I cannot provide diagnoses, treatment recommendations, medication recommendations, or dosage changes. Please consult the attending physician."
+
+define bot refuse unrelated question
+  "I can only answer questions about the patient's available medical records."
+
+define flow prevent medical advice
+  user ask for medical advice
+  bot refuse medical advice
+
+define flow prevent unrelated question
+  user ask unrelated question
+  bot refuse unrelated question
