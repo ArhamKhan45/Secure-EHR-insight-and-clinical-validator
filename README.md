@@ -123,19 +123,14 @@ Clinical Response
 
 ```bash
 git clone https://github.com/ArhamKhan45/Secure-EHR-insight-and-clinical-validator.git
-
 cd Secure-EHR-insight-and-clinical-validator
 ```
 
 ## 2. Create Virtual Environment
 
-Using `uv`:
-
 ```bash
 uv venv
 ```
-
-Activate the environment.
 
 ### macOS / Linux
 
@@ -169,7 +164,6 @@ DB_PASSWORD=your_password
 HF_TOKEN=your_huggingface_token
 
 BACKEND_API_URL=http://127.0.0.1:8000/api/v1
-OPENROUTER_API_KEY=xxx-xx-x-x-x-x-x-x-x-x-x-
 ```
 
 Never commit `.env` or private credentials to GitHub.
@@ -230,8 +224,6 @@ sudo systemctl restart postgresql
 
 ## 6. Create Database
 
-Create the database:
-
 ```bash
 sudo -u postgres psql -c "CREATE DATABASE ehr_db;"
 ```
@@ -266,17 +258,16 @@ GRANT ALL ON SCHEMA public TO fde_admin;
 
 ```bash
 sudo apt update
-
 sudo apt install -y postgresql-16-pgvector
 ```
 
-Verify the extension:
+Verify:
 
 ```bash
 ls /usr/share/postgresql/16/extension/vector*
 ```
 
-Enable pgvector:
+Enable:
 
 ```bash
 sudo -u postgres psql -d ehr_db \
@@ -284,8 +275,6 @@ sudo -u postgres psql -d ehr_db \
 ```
 
 ## 8. Database Schema
-
-Apply the project schema:
 
 ```bash
 python scripts/03_apply_vector_schema.py
@@ -297,9 +286,7 @@ The clinical embedding column uses:
 vector(768)
 ```
 
-The system uses cosine distance for semantic similarity search.
-
-Example:
+Semantic search uses cosine distance:
 
 ```sql
 clinical_embedding <=> CAST(:query_vector AS vector(768))
@@ -307,25 +294,25 @@ clinical_embedding <=> CAST(:query_vector AS vector(768))
 
 ## 9. Data Ingestion Pipeline
 
-### Step 1 — Ingest EHR Data
+### Ingest EHR Data
 
 ```bash
 python scripts/01_ingest_baseline_data.py
 ```
 
-### Step 2 — Verify Ingestion
+### Verify Ingestion
 
 ```bash
 python scripts/02_verify_ingestion.py
 ```
 
-### Step 3 — Apply Vector Schema
+### Apply Vector Schema
 
 ```bash
 python scripts/03_apply_vector_schema.py
 ```
 
-### Step 4 — Generate Clinical Embeddings
+### Generate Clinical Embeddings
 
 ```bash
 python scripts/04_generate_embeddings.py
@@ -337,9 +324,7 @@ The project uses:
 NeuML/bioclinical-modernbert-base-embeddings
 ```
 
-The generated embeddings are stored in PostgreSQL using pgvector.
-
-### Step 5 — Test Vector Search
+### Test Vector Search
 
 ```bash
 python scripts/05_test_vector_search.py
@@ -349,13 +334,13 @@ python scripts/05_test_vector_search.py
 
 The project uses **Microsoft Presidio** to detect and anonymize sensitive information.
 
-The service is located at:
+Service:
 
 ```text
 src/pii_redaction/presidio_service.py
 ```
 
-Run the service test:
+Run:
 
 ```bash
 python src/pii_redaction/presidio_service.py
@@ -371,36 +356,34 @@ The implementation includes:
 
 ## 11. Guardrails
 
-Guardrails are configured in:
+Configuration:
 
 ```text
 src/guardrails/config.yml
 src/guardrails/rails.co
 ```
 
-Run the guardrail test:
+Test:
 
 ```bash
 python scripts/06_test_guardrails.py
 ```
 
-The guardrail layer helps control and validate AI interactions before generating clinical responses.
-
 ## 12. FastAPI Backend
 
-Start the FastAPI backend:
+Start:
 
 ```bash
 uvicorn src.api.main:app --reload
 ```
 
-The API will be available at:
+API:
 
 ```text
 http://localhost:8000
 ```
 
-FastAPI documentation:
+Documentation:
 
 ```text
 http://localhost:8000/docs
@@ -408,33 +391,21 @@ http://localhost:8000/docs
 
 ### API Endpoints
 
-#### Get Patients
-
 ```http
-GET /api/v1/patients
-```
-
-#### Clinical Query
-
-```http
+GET  /api/v1/patients
 POST /api/v1/clinical-query
-```
-
-#### Chat
-
-```http
 POST /api/v1/chat
 ```
 
 ## 13. Streamlit UI
 
-Start Streamlit:
+Start:
 
 ```bash
 streamlit run src/ui/app.py
 ```
 
-The application will be available at:
+Application:
 
 ```text
 http://localhost:8501
@@ -442,13 +413,10 @@ http://localhost:8501
 
 ## 14. Local Startup Workflow
 
-After PostgreSQL and pgvector are configured:
-
 ### Terminal 1 — FastAPI
 
 ```bash
 source .venv/bin/activate
-
 uvicorn src.api.main:app --reload
 ```
 
@@ -456,7 +424,6 @@ uvicorn src.api.main:app --reload
 
 ```bash
 source .venv/bin/activate
-
 streamlit run src/ui/app.py
 ```
 
@@ -466,18 +433,16 @@ Open:
 http://localhost:8501
 ```
 
-The database ingestion and embedding scripts only need to be executed when setting up or updating the dataset.
-
 ## 15. Docker
 
-Build the Docker image:
+Build:
 
 ```bash
 docker build --pull \
   -t secure-ehr-insight-and-clinical-validator:latest .
 ```
 
-Run the container:
+Run:
 
 ```bash
 docker run -d \
@@ -490,25 +455,25 @@ docker run -d \
   secure-ehr-insight-and-clinical-validator:latest
 ```
 
-### Check Container
+Check:
 
 ```bash
 docker ps
 ```
 
-### View Logs
+Logs:
 
 ```bash
 docker logs -f secure-ehr-insight-and-clinical-validator
 ```
 
-### Stop Container
+Stop:
 
 ```bash
 docker stop secure-ehr-insight-and-clinical-validator
 ```
 
-### Remove Container
+Remove:
 
 ```bash
 docker rm -f secure-ehr-insight-and-clinical-validator
@@ -516,7 +481,7 @@ docker rm -f secure-ehr-insight-and-clinical-validator
 
 ## 16. Docker Database Configuration
 
-When PostgreSQL is running directly on the EC2 host and the application is running inside Docker, use:
+When PostgreSQL runs directly on the EC2 host:
 
 ```env
 DB_HOST=host.docker.internal
@@ -526,19 +491,15 @@ DB_USER=fde_admin
 DB_PASSWORD=your_password
 ```
 
-The Docker container is started with:
+The container uses:
 
 ```bash
 --add-host=host.docker.internal:host-gateway
 ```
 
-This allows the container to communicate with PostgreSQL running on the host machine.
-
 ## 17. Docker Internal Backend URL
 
 FastAPI and Streamlit run inside the same container.
-
-Therefore Streamlit communicates with FastAPI through:
 
 ```env
 BACKEND_API_URL=http://127.0.0.1:8000/api/v1
@@ -546,15 +507,13 @@ BACKEND_API_URL=http://127.0.0.1:8000/api/v1
 
 ## 18. Updating Environment Variables
 
-Changing `.env` does not require rebuilding the Docker image.
+`.env` changes do not require a Docker rebuild.
 
 Recreate the container:
 
 ```bash
 docker rm -f secure-ehr-insight-and-clinical-validator
 ```
-
-Then:
 
 ```bash
 docker run -d \
@@ -567,14 +526,7 @@ docker run -d \
   secure-ehr-insight-and-clinical-validator:latest
 ```
 
-A Docker rebuild is required when changing:
-
-- `Dockerfile`
-- `requirements.txt`
-- `start.sh`
-- Application source code
-
-Rebuild with:
+Rebuild only when changing application code, `Dockerfile`, `requirements.txt`, or `start.sh`.
 
 ```bash
 docker build --pull \
@@ -640,8 +592,6 @@ curl http://localhost:8501/_stcore/health
 
 ## 21. Security
 
-Sensitive configuration should be stored in environment variables.
-
 Do not commit:
 
 ```text
@@ -652,8 +602,6 @@ API keys
 database passwords
 Hugging Face tokens
 ```
-
-Use `.gitignore` to prevent sensitive files from being committed.
 
 ## 22. Deployment Architecture
 
@@ -711,4 +659,4 @@ The focus is on building a secure, retrieval-driven architecture for working wit
 
 ## Developer
 
-**Arham Ullah Khan — Developer**
+**[Arham Ullah Khan — Developer](https://arhamullahkhan.vercel.app/)**
