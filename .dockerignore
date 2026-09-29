@@ -1,39 +1,26 @@
 .git
-.github
-
+.gitignore
 .env
 .env.*
-!.env.example
+*.env
 
-EHR-database.pem
+__pycache__
+*.pyc
+*.pyo
+*.pyd
 
-data/
-scripts/
-instruction_notes/
+.venv
+venv
+env
 
-README.md
+.pytest_cache
+.mypy_cache
+.ruff_cache
 
-.venv/
-venv/
-env/
-ENV/
+.streamlit/secrets.toml
 
-__pycache__/
-*.py[cod]
-
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-
-*.log
+data
+mentor-docs
 
 .DS_Store
-
-.vscode/
-.idea/
-
-node_modules/
-
-dist/
-build/
-*.egg-info/
+*.log
