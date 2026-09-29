@@ -52,8 +52,44 @@ patient_id = st.sidebar.selectbox(
     patient_list
 )
 
+
 st.sidebar.info(
     f"🔒 Database explicitly locked to Patient: {patient_id}"
+)
+
+st.sidebar.markdown(
+    """
+    <style>
+    .developer-sidebar {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 250px;
+    }
+
+    .developer-sidebar a {
+        color: white !important;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .developer-sidebar a:hover {
+        color: white !important;
+        text-decoration: underline;
+    }
+    </style>
+
+    <div class="developer-sidebar">
+        <a
+            href="https://arhamullahkhan.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            👨‍💻 Arham Ullah Khan — Developer
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
 )
 
 
