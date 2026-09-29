@@ -1,11 +1,10 @@
 # AWS EC2 Docker Deployment Guide
 
- **AWS EC2 Ubuntu instance using Docker**.
+**AWS EC2 Ubuntu instance using Docker**.
 
 The deployment flow is:
 
 **GitHub → EC2 → Docker Image → Docker Container → Streamlit UI**
-
 
 ---
 
@@ -24,9 +23,9 @@ Recommended configuration:
 
 Add these inbound rules:
 
-| Type | Port | Source |
-|---|---:|---|
-| SSH | 22 | My IP |
+| Type       | Port | Source    |
+| ---------- | ---: | --------- |
+| SSH        |   22 | My IP     |
 | Custom TCP | 8501 | 0.0.0.0/0 |
 
 You do **not** need to expose port `8000`.
@@ -373,7 +372,7 @@ cat Dockerfile
 From the project directory:
 
 ```bash
-docker build --pull -t fde-project-2:latest .
+docker build --pull -t secure-EHR-insight-and-clinical-validator:latest .
 ```
 
 Check images:

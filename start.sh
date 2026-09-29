@@ -1,10 +1,11 @@
 #!/bin/sh
+
 set -e
 
 echo "Starting FastAPI..."
 
 uvicorn src.api.main:app \
-    --host 127.0.0.1 \
+    --host 0.0.0.0 \
     --port 8000 &
 
 API_PID=$!
@@ -23,11 +24,11 @@ done
 
 echo "FastAPI is ready."
 
-echo "Starting Streamlit on port ${PORT:-10000}..."
+echo "Starting Streamlit on port 8501..."
 
 exec streamlit run src/ui/app.py \
     --server.address=0.0.0.0 \
-    --server.port="${PORT:-10000}" \
+    --server.port=8501 \
     --server.headless=true \
     --server.enableCORS=false \
     --server.enableXsrfProtection=false
